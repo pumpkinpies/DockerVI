@@ -1,0 +1,63 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- link rel="stylesheet" type="text/css" href="./css/style.css" -->
+    <!-- jquery -->
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" >
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <title>DockerVI</title>
+    <link rel="stylesheet" href="">
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="col-md-3">
+                <h2>
+                    DockerVI
+                </h2>
+                <h3>
+                    &nbsp;
+                </h3>
+                <ul class="nav nav-list">
+                    <li class="nav-header">
+                        ENDPOINT ACTIONS
+                    </li>
+                    <li class="active">
+                        <a href="#">Dashboard</a>
+                    </li>
+                    <li>
+                        <a href="#">Containers</a>
+                    </li>
+                    <li>
+                        <a href="#">Images</a>
+                    </li>
+                    <li>
+                        <a href="#">Volumes</a>
+                    </li>
+                    <li>
+                        <a href="#">Networks</a>
+                    </li>
+                    <li class="nav-header">
+                        Settings
+                    </li>
+                    <li>
+                        <a href="#">Addpoint</a>
+                    </li>
+                    <li>
+                        <a href="#">Settings</a>
+                    </li>
+                    <li class="divider">
+                    </li>
+                    <li>
+                        <a href="#">About</a>
+                    </li>
+                </ul>
+            </div>
+            {% block content %}
+            {% endblock %}
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!-- bashboard -->            
+{% extends "base.html" %}
+{% block content %}
+            <div class="col-md-9">
+                <h5>&nbsp;</h5>
+                <h3>
+                    Dashboard
+                </h3>
+                <h4>&nbsp;</h4>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>
+                                <span class="glyphicon glyphicon-globe" aria-hidden="true"></span> Host Info
+                            </th>
+                            <th>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                Name
+                            </td>
+                            <td>
+                                {{ HostName }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Docker Version
+                            </td>
+                            <td>
+                                {{ DockerVersion }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                CPU
+                            </td>
+                            <td>
+                                {{ CpuNum }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Memory
+                            </td>
+                            <td>
+                                {{ Memory }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Containers
+                            </td>
+                            <td>
+                                total:{{ Containers }},  {{ ContainersRunning }} is running
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Images
+                            </td>
+                            <td>
+                                {{ Images }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Volumes
+                            </td>
+                            <td>
+                                {{ Volumes }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Networks
+                            </td>
+                            <td>
+                                {{ Networks }}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
