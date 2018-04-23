@@ -1,0 +1,60 @@
+<!-- network.html -->            
+{% extends "base.html" %}
+{% block content %}
+            <div class="col-md-9">
+                <h5>&nbsp;</h5>
+                <h3>
+                    Networks
+                </h3>
+                <h4>&nbsp;</h4>
+                
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>
+                                <span class="glyphicon glyphicon-globe" aria-hidden="true"></span> Networks Info
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>
+                                Name
+                            </th>
+                            <th>
+                                Scope
+                            </th>
+                            <th>
+                                Driver
+                            </th>
+                             <th>
+                                IPAM Gateway
+                            </th>
+                             <th>
+                                IPAM Subnet
+                            </th>
+                        </tr>
+                    </thead>
+                    
+                    <tbody>
+                        {% for network in networklist %}
+                        <tr>
+                            <td>
+                               {{ network.Name }} 
+                            </td>
+                            <td>
+                                {{ network.Scope }}
+                            </td>
+                            <td>
+                                {{ network.Driver }}
+                            </td>
+                            <td>
+                                {{ network.Gateway }}
+                            </td>
+                            <td>
+                                {{ network.Subnet }}
+                            </td>
+                        </tr>
+                        {% endfor %}                       
+                    </tbody>                    
+                </table>
+            </div>
+{% endblock %}

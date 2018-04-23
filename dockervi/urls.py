@@ -15,10 +15,12 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from .views import Dashboard
+from .views import Dashboard, Images, Networks
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', Dashboard),
+    url(r'^Images$', Images),
+    url(r'^Networks$',Networks),
 ]
 

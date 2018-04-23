@@ -1,0 +1,41 @@
+<!-- image.html -->            
+{% extends "base.html" %}
+{% block content %}
+              <div class="col-md-9">
+                <h5>&nbsp;</h5>
+                <h3>
+                    Images
+                </h3>
+                <h4>&nbsp;</h4>
+                
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>
+                                <span class="glyphicon glyphicon-cd" aria-hidden="true"></span> Images Info
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>
+                                ID
+                            </th>
+                            <th>
+                                Tag
+                            </th>
+                        </tr>
+                    </thead>
+                    {% for image in imagelist %}
+                    <tbody>
+                        <tr>
+                            <td>
+                               {{ image.Id | truncatechars:10 }} 
+                            </td>
+                            <td>
+                                {{ imgae.Tag | truncatechars:20 }}
+                            </td>
+                        </tr>                        
+                    </tbody>
+                    {% endfor %}
+                </table>
+            </div>
+{% endblock %}
