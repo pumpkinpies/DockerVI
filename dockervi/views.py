@@ -28,28 +28,34 @@ def Images(request):
     template = get_template('image.html')
     client = docker.from_env()
     templist = client.images.list()
+    imagedict = {}
+    imagelist = []
+    tagstr = ''
+    for item in templist:
+        imagedict['Id'] = item.attrs['Id']
+        imagedict['Created'] = item.attrs['Created'][:19]
+        imagedict['Tag'] = item.attrs['RepoTags'] 
+        imagelist.append(imagedict.copy())
     html = template.render(locals())
     return HttpResponse(html)
 
 def Networks(request):
-        template = get_template('network.html')
-        client = docker.from_env()
-        templist = client.networks.list()
-        networklist = []
-        networkdict = {}
-        for item in templist:
-            networkdict['Name'] = item.attrs['Name']
-            networkdict['Scope'] = item.attrs['Scope']
-            networkdict['Driver'] = item.attrs['Driver']
-            if item.attrs['IPAM']['Config'] != []:
-                networkdict['Gateway'] = item.attrs['IPAM']['Config'][0]['Gateway']
-                networkdict['Subnet'] = item.attrs['IPAM']['Config'][0]['Subnet']
-            else:
-                networkdict['Gateway'] = "" 
-                networkdict['Subnet'] = ""
-            print (networkdict) 
-            networklist.append(networkdict.copy())
-        print (networklist)    
-        html = template.render(locals())
-        return HttpResponse(html)
+    template = get_template('network.html')
+    client = docker.from_env()
+    templist = client.networks.list()
+    networklist = []
+    networkdict = {}
+    for item in templist:
+        networkdict['Name'] = item.attrs['Name']
+        networkdict['Scope'] = item.attrs['Scope']
+        networkdict['Driver'] = item.attrs['Driver']
+        if item.attrs['IPAM']['Config'] != []:
+            networkdict['Gateway'] = item.attrs['IPAM']['Config'][0]['Gateway']
+            networkdict['Subnet'] = item.attrs['IPAM']['Config'][0]['Subnet']
+        else:
+            networkdict['Gateway'] = ""
+            networkdict['Subnet'] = ""
+        networklist.append(networkdict.copy())
+    html = template.render(locals())
+    return HttpResponse(html)
 

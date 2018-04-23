@@ -1,14 +1,14 @@
 <!-- image.html -->            
 {% extends "base.html" %}
 {% block content %}
-              <div class="col-md-9">
-                <h5>&nbsp;</h5>
-                <h3>
-                    Images
-                </h3>
-                <h4>&nbsp;</h4>
-                
-                <table class="table table-striped">
+          <div class="col-md-9 ">
+            <h5>&nbsp;</h5>
+            <h3>
+                Images
+            </h3>
+            <h4>&nbsp;</h4>
+            <div class="table-responsive">
+                <table class="table table-striped ">
                     <thead>
                         <tr>
                             <th>
@@ -17,7 +17,10 @@
                         </tr>
                         <tr>
                             <th>
-                                ID
+                                Id
+                            </th>
+                            <th>
+                                Created
                             </th>
                             <th>
                                 Tag
@@ -25,17 +28,23 @@
                         </tr>
                     </thead>
                     {% for image in imagelist %}
-                    <tbody>
+                    <tbody style=" white-space:nowrap; font-size: 14px;">
                         <tr>
                             <td>
-                               {{ image.Id | truncatechars:10 }} 
+                               {{ image.Id | truncatechars:20 }} 
                             </td>
                             <td>
-                                {{ imgae.Tag | truncatechars:20 }}
+                                {{ image.Created }}
+                            </td>                                
+                            <td >
+                                {% for Tag in image.Tag %}
+                                <span class="label label-primary">{{ Tag }}</span>
+                                {% endfor %}
                             </td>
                         </tr>                        
                     </tbody>
                     {% endfor %}
                 </table>
             </div>
+        </div>
 {% endblock %}
