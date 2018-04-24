@@ -24,13 +24,33 @@ def Dashboard(request):
 
     return HttpResponse(html)
 
+def Containers(request):
+    template = get_template('container.html')
+    client = docker.from_env()
+    templist = client.containers.list(all=True)
+    containerdict = {}
+    containerlist = []
+    for item in templist:
+        containerdict['Name'] = item.attrs['Name'][1:]
+        containerdict['Image'] = item.attrs['Config']['Image']
+        containerdict['IPAddress'] = item.attrs['NetworkSettings']['IPAddress']
+        containerdict['Status'] = item.attrs['State']['Status']
+        containerdict['IsRunning'] = ""
+        if containerdict['Status'] == 'running':
+           containerdict['IsRunning'] = 1
+        containerdict['Ports'] = 9000
+        containerlist.append(containerdict.copy())
+
+    html = template.render(locals())
+    return HttpResponse(html)
+
+
 def Images(request):
     template = get_template('image.html')
     client = docker.from_env()
     templist = client.images.list()
     imagedict = {}
     imagelist = []
-    tagstr = ''
     for item in templist:
         imagedict['Id'] = item.attrs['Id']
         imagedict['Created'] = item.attrs['Created'][:19]
@@ -38,7 +58,21 @@ def Images(request):
         imagelist.append(imagedict.copy())
     html = template.render(locals())
     return HttpResponse(html)
-
+def Volumes(request):
+    template = get_template('volume.html')
+    client = docker.from_env()
+    templist = client.volumes.list()
+    volumedict = {}
+    volumelist = []
+    for item in templist:
+        volumedict['Name'] = item.attrs['Name']
+        volumedict['Mountpoint'] = item.attrs['Mountpoint']
+        volumedict['Mountpoint'] = volumedict['Mountpoint'][:27]+'...'+volumedict['Mountpoint'][-9:]
+        volumedict['Driver'] = item.attrs['Driver']
+        volumedict['Labels'] = item.attrs['Labels']
+        volumelist.append(volumedict.copy())
+    html = template.render(locals())
+    return HttpResponse(html)
 def Networks(request):
     template = get_template('network.html')
     client = docker.from_env()
