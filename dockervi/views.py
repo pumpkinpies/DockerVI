@@ -38,7 +38,10 @@ def Containers(request):
         containerdict['IsRunning'] = ""
         if containerdict['Status'] == 'running':
            containerdict['IsRunning'] = 1
-        containerdict['Ports'] = 9000
+        PortBindings = item.attrs['HostConfig']['PortBindings']
+        for i in PortBindings:
+            for j in PortBindings[i]:
+                containerdict['Ports'] = j['HostPort']+' '
         containerlist.append(containerdict.copy())
 
     html = template.render(locals())
@@ -58,6 +61,7 @@ def Images(request):
         imagelist.append(imagedict.copy())
     html = template.render(locals())
     return HttpResponse(html)
+    
 def Volumes(request):
     template = get_template('volume.html')
     client = docker.from_env()
@@ -73,6 +77,7 @@ def Volumes(request):
         volumelist.append(volumedict.copy())
     html = template.render(locals())
     return HttpResponse(html)
+
 def Networks(request):
     template = get_template('network.html')
     client = docker.from_env()
@@ -92,4 +97,3 @@ def Networks(request):
         networklist.append(networkdict.copy())
     html = template.render(locals())
     return HttpResponse(html)
-

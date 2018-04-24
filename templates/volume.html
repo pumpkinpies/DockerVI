@@ -30,8 +30,8 @@
                             </th>
                         </tr>
                     </thead>
-                    {% for volume in volumelist %}
                     <tbody style=" white-space:nowrap; font-size: 14px">
+                    {% for volume in volumelist %}
                         <tr>
                             <td>
                                {{ volume.Name | truncatechars:20 }} 
@@ -45,9 +45,9 @@
                             <td>
                                 {{ volume.Mountpoint }}
                             </td>
-                        </tr>                        
+                        </tr>                    
+                    {% endfor %}    
                     </tbody>
-                    {% endfor %}
                 </table>
             </div>
         </div>

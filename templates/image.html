@@ -27,8 +27,8 @@
                             </th>
                         </tr>
                     </thead>
-                    {% for image in imagelist %}
                     <tbody style=" white-space:nowrap; font-size: 14px;">
+                    {% for image in imagelist %}
                         <tr>
                             <td>
                                {{ image.Id | truncatechars:20 }} 
@@ -41,9 +41,9 @@
                                 <span class="label label-primary">{{ Tag }}</span>
                                 {% endfor %}
                             </td>
-                        </tr>                        
+                        </tr>
+                    {% endfor %}                        
                     </tbody>
-                    {% endfor %}
                 </table>
             </div>
         </div>
