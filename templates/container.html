@@ -38,7 +38,7 @@
                     {% for container in containerlist %}
                         <tr>
                             <td>
-                               {{ container.Name  }} 
+                               <a href="Containers/{{ container.Id }}" title="">{{ container.Name  }} </a>
                             </td>
                             <td>
                             {% if container.IsRunning %}
@@ -63,3 +63,4 @@
             </div>
         </div>
 {% endblock %}
+
