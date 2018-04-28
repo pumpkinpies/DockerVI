@@ -3,6 +3,7 @@ from django.template.loader import get_template
 from django.template import context
 from datetime import datetime
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib import messages
 import docker
 
 
@@ -39,52 +40,75 @@ def getContainInfo(container):
 
 @csrf_exempt
 def ContainerInfo(request, Id):
-    template = get_template('containerinfo.html')
-    client = docker.from_env()
-    container = client.containers.get(Id)
+    
     value = request.POST.get('submit')
+    template = get_template('containerinfo.html')
 
     if value is None:
+        
+        client = docker.from_env()
+        container = client.containers.get(Id)
         containerdict,volumelist = getContainInfo(container)
         if containerdict['Status'] == 'exited':
             StartIsDisabled = ''
             StopIsDisabled = 'disabled=\'disabled\''
             RestartIsDisabled = 'disabled=\'disabled\''
-            PauseIsDisabled = ''
+            PauseIsDisabled = 'disabled=\'disabled\''
             ResumeIsDisabled = 'disabled=\'disabled\''
-            KillIsDisabled = ''
-        else :
-            StartIsDisabled = 'disabled=\'disabled\''
-            StopIsDisabled = ''
-            RestartIsDisabled = ''
-            KillIsDisabled = ''
+            KillIsDisabled = 'disabled=\'disabled\''
+        else :            
             if containerdict['Paused'] == False:
+                StartIsDisabled = 'disabled=\'disabled\''
+                StopIsDisabled = ''
+                RestartIsDisabled = ''
                 PauseIsDisabled = ''
-                ResumeIsDisabled = ''
+                ResumeIsDisabled = 'disabled=\'disabled\''
+                KillIsDisabled = ''
             else:
+                StartIsDisabled = 'disabled=\'disabled\''
+                StopIsDisabled = 'disabled=\'disabled\''
+                RestartIsDisabled = 'disabled=\'disabled\''
                 PauseIsDisabled = 'disabled=\'disabled\''
                 ResumeIsDisabled = ''
+                KillIsDisabled = 'disabled=\'disabled\''
+
+
     else:
-        exec ('container.%s' %value)
+        client = docker.from_env()
+        container = client.containers.get(Id)
+        try:
+            exec ('container.%s' %value)
+        except :
+            messages.add_message(request,messages.ERROR, 'Someting Wrong, Please Check') 
+            
+
+        client = docker.from_env()
+        container = client.containers.get(Id)
         containerdict,volumelist = getContainInfo(container)
+        
         if containerdict['Status'] == 'exited':
             StartIsDisabled = ''
             StopIsDisabled = 'disabled=\'disabled\''
             RestartIsDisabled = 'disabled=\'disabled\''
-            PauseIsDisabled = ''
+            PauseIsDisabled = 'disabled=\'disabled\''
             ResumeIsDisabled = 'disabled=\'disabled\''
-            KillIsDisabled = ''
-        else :
-            StartIsDisabled = 'disabled=\'disabled\''
-            StopIsDisabled = ''
-            RestartIsDisabled = ''
-            KillIsDisabled = ''
+            KillIsDisabled = 'disabled=\'disabled\''
+        else :            
             if containerdict['Paused'] == False:
+                StartIsDisabled = 'disabled=\'disabled\''
+                StopIsDisabled = ''
+                RestartIsDisabled = ''
                 PauseIsDisabled = ''
-                ResumeIsDisabled = ''
+                ResumeIsDisabled = 'disabled=\'disabled\''
+                KillIsDisabled = ''
             else:
+                StartIsDisabled = 'disabled=\'disabled\''
+                StopIsDisabled = 'disabled=\'disabled\''
+                RestartIsDisabled = 'disabled=\'disabled\''
                 PauseIsDisabled = 'disabled=\'disabled\''
                 ResumeIsDisabled = ''
+                KillIsDisabled = 'disabled=\'disabled\''
+        
         
 
     html = template.render(locals())
@@ -99,5 +123,6 @@ def Logs(request, Id):
 
 def Inspect(request, Id):
         pass
+
 
 
