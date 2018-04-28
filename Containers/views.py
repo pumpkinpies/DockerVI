@@ -4,6 +4,7 @@ from django.template import context
 from datetime import datetime
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib import messages
+import json
 import docker
 
 
@@ -114,9 +115,23 @@ def ContainerInfo(request, Id):
     html = template.render(locals())
     return HttpResponse(html)
 
-
 def Stats(request, Id):
-        pass
+    if request.method == 'GET':
+       data = []
+       memorydata = [1,3,4,5,]
+       cpudata = []
+       networkdata = []
+       data.append(memorydata)
+       data.append(cpudata)
+       data.append(networkdata)
+       
+       return HttpResponse(json.dumps(data),content_type="application/json")
+     
+    template = get_template('stats.html')
+    html = template.render(locals())
+    return render(html)
+
+
 
 def Logs(request, Id):
         pass

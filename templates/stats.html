@@ -1,0 +1,71 @@
+<!-- stats.html -->            
+{% extends "base.html" %}
+{% block content %} 
+            <div class="col-md-9 ">
+                <h5>&nbsp;</h5>
+                <h3>
+                    Container statistics
+                </h3>
+                <h4>&nbsp;</h4>
+                
+                <div class="col-md-4">
+                    <div id="memory" style="height:250px;"></div>
+                </div>
+                <div class="col-md-4">
+                    <div id="cpu" style="height:250px;"></div>
+                </div>
+                <div class="col-md-4">
+                    <div id="network" style="height:250px;"></div>
+                </div>    
+
+                <table class="table table-striped ">
+                    <caption> <span class="glyphicon glyphicon-list" > </span> Processes </caption>
+                    <thead>
+                        <tr>
+                            <th>
+                                UID
+                            </th>
+                            <th>
+                                PID
+                            </th>
+                            <th>
+                                PPID
+                            </th>
+                            <th>
+                                STIME
+                            </th>
+                            <th>
+                                TTY
+                            </th>
+                            <th>
+                                CMD       
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody style=" white-space:nowrap;  font-size: 12px">
+                        {% for process in processlist %}
+                        <tr>
+                            <td>
+                                {{ process.uid }}
+                            </td>
+                            <td>
+                                {{ process.pid }}
+                            </td>
+                            <td>
+                                {{ process.ppid }}
+                            </td>
+                            <td>
+                                {{ process.stime }}
+                            </td>
+                            <td>
+                                {{ process.tty }}
+                            </td>
+                            <td>
+                                {{ process.cmd }}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+{% endblock %}
