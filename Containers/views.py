@@ -115,21 +115,23 @@ def ContainerInfo(request, Id):
     html = template.render(locals())
     return HttpResponse(html)
 
+
+
+@csrf_exempt
+def Chart(request, Id):
+    client = docker.from_env()
+    container = client.containers.get(Id)    
+    memoryb = container.stats(decode=True,stream=False)['memory_stats']['usage']                
+    memory = round(memoryb/(1024*1024), 2) 
+    
+    return HttpResponse(json.dumps({'memory':memory}),content_type="application/json")
+
+
 def Stats(request, Id):
-    if request.method == 'GET':
-       data = []
-       memorydata = [1,3,4,5,]
-       cpudata = []
-       networkdata = []
-       data.append(memorydata)
-       data.append(cpudata)
-       data.append(networkdata)
-       
-       return HttpResponse(json.dumps(data),content_type="application/json")
      
     template = get_template('stats.html')
     html = template.render(locals())
-    return render(html)
+    return HttpResponse(html)
 
 
 

@@ -16,7 +16,7 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from .views import Dashboard,Containers, Images,Volumes,Networks
-from Containers.views import ContainerInfo,Stats,Logs,Inspect
+from Containers.views import ContainerInfo,Stats,Logs,Inspect,Chart
 
 
 urlpatterns = [
@@ -25,6 +25,7 @@ urlpatterns = [
     url(r'^Containers$',Containers),
     url(r'^Containers/(\w+)$',ContainerInfo),
     url(r'^Containers/(\w+)/Stats$', Stats),
+    url(r'^Containers/(\w+)/Stats/chart$', Chart),
     url(r'^Containers/(\w+)/Logs$', Logs),
     url(r'^Containers/(\w+)/Inspect$', Inspect),
     url(r'^Images$', Images),
