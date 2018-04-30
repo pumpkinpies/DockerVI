@@ -1,32 +1,33 @@
-<!-- stats.html -->            
+<!-- stats.html -->
 {% extends "base.html" %}
 
 {% block header %}
     <script src="http://cdn.hcharts.cn/highcharts/highcharts.js"></script>
     <script src="/static/js/chart.js" type="text/javascript" charset="utf-8"></script>
-{% endblock %}  
+{% endblock %}
 
-{% block content %} 
+{% block content %}
             <div class="col-md-9 ">
                 <h5>&nbsp;</h5>
                 <h3>
                     Container statistics
                 </h3>
                 <h4>&nbsp;</h4>
-                
-                <div class="col-md-4">
-                    <div id="memory" style="height:250px;"></div>
-                </div>
-                <div class="col-md-4">
-                    <div id="cpu" style="height:250px;"></div>
-                </div>
-                <div class="col-md-4">
-                    <div id="network" style="height:250px;"></div>
-                </div>    
 
-                <table class="table table-striped ">
-                    <caption> <span class="glyphicon glyphicon-list" > </span> Processes </caption>
-                    <thead>
+                <div class="col-md-6">
+                    <div id="memory" style="height:280px;"></div>
+                </div>
+                <div class="col-md-6">
+                    <div id="cpu" style="height:280px;"></div>
+                </div>
+                <div class="col-md-6">
+                    <div id="network" style="height:280px;"></div>
+                </div>
+                <div class="col-md-6">
+                    <div id="block" style="height:280px;">
+                        <table class="table table-striped ">
+                    <caption style="font-size: 10px"> <span class="glyphicon glyphicon-list" > </span> Processes </caption>
+                    <thead style="font-size: 14px">
                         <tr>
                             <th>
                                 UID
@@ -35,13 +36,10 @@
                                 PID
                             </th>
                             <th>
-                                PPID
-                            </th>
-                            <th>
                                 STIME
                             </th>
                             <th>
-                                TTY
+                                TIME
                             </th>
                             <th>
                                 CMD       
@@ -57,14 +55,12 @@
                             <td>
                                 {{ process.pid }}
                             </td>
-                            <td>
-                                {{ process.ppid }}
-                            </td>
+                            
                             <td>
                                 {{ process.stime }}
                             </td>
                             <td>
-                                {{ process.tty }}
+                                {{ process.time }}
                             </td>
                             <td>
                                 {{ process.cmd }}
@@ -73,5 +69,8 @@
                         {% endfor %}
                     </tbody>
                 </table>
+                    </div>
+                </div>    
             </div>
 {% endblock %}
+

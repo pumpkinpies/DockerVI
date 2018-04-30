@@ -121,14 +121,40 @@ def ContainerInfo(request, Id):
 def Chart(request, Id):
     client = docker.from_env()
     container = client.containers.get(Id)    
-    memoryb = container.stats(decode=True,stream=False)['memory_stats']['usage']                
-    memory = round(memoryb/(1024*1024), 2) 
     
-    return HttpResponse(json.dumps({'memory':memory}),content_type="application/json")
+    container_stats = container.stats(decode=True,stream=False)
+
+    memoryb = container_stats['memory_stats']['usage']                
+    memory = round(memoryb/(1024*1024), 2)
+
+    cpu_system_use=container_stats['cpu_stats']['system_cpu_usage']
+    cpu_total_use=container_stats['cpu_stats']['cpu_usage']['total_usage']
+    cpu_count=len(container_stats['cpu_stats']['cpu_usage']['percpu_usage'])
+    cpu = round((float(cpu_total_use)/float(cpu_system_use))*cpu_count*10000.0,2)
+
+    tx = round(container_stats['networks']['eth0']['tx_bytes']/1024, 2)
+    rx = round(container_stats['networks']['eth0']['rx_bytes']/1024, 2)
+ 
+    return HttpResponse(json.dumps({'memory':memory,'cpu':cpu,'tx':tx,'rx':rx}),content_type="application/json")
 
 
 def Stats(request, Id):
-     
+    
+    client = docker.from_env()
+    container = client.containers.get(Id)
+    container_process = container.top()['Processes']
+    processlist = []
+    processdict = {}
+
+    if container_process:
+        for i in range(len(container_process)):
+            processdict['uid'] = container_process[i][0]
+            processdict['pid'] = container_process[i][1]
+            processdict['stime'] = container_process[i][4]
+            processdict['time'] = container_process[i][6]
+            processdict['cmd'] = container_process[i][7]
+            processlist.append(processdict.copy())
+ 
     template = get_template('stats.html')
     html = template.render(locals())
     return HttpResponse(html)
