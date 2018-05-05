@@ -127,11 +127,11 @@ def Chart(request, Id):
     memoryb = container_stats['memory_stats']['usage']                
     memory = round(memoryb/(1024*1024), 2)
 
-    cpu_system_use=container_stats['cpu_stats']['system_cpu_usage']
-    cpu_total_use=container_stats['cpu_stats']['cpu_usage']['total_usage']
+    system_delta = container_stats['cpu_stats']['system_cpu_usage']-container_stats['precpu_stats']['system_cpu_usage']
+    cpu_delta = container_stats['cpu_stats']['cpu_usage']['total_usage']-container_stats['precpu_stats']['cpu_usage']['total_usage']
     cpu_count=len(container_stats['cpu_stats']['cpu_usage']['percpu_usage'])
-    cpu = round((float(cpu_total_use)/float(cpu_system_use))*cpu_count*10000.0,2)
-
+    cpu = round((float(cpu_delta)/float(system_delta))*cpu_count*100.0,2)
+    
     tx = round(container_stats['networks']['eth0']['tx_bytes']/1024, 2)
     rx = round(container_stats['networks']['eth0']['rx_bytes']/1024, 2)
  
