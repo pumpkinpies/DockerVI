@@ -175,7 +175,7 @@ $(document).ready(function(){
             alternateGridColor: null,
         },
         tooltip: {
-            valueSuffix: ' Kbps'
+            valueSuffix: ' Kb'
         },
         plotOptions: {
             spline: {

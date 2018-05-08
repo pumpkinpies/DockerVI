@@ -97,10 +97,8 @@
                         </tbody>
                     </table>
                     <div class="btn-toolbar" role="toolbar" style="margin-bottom: 10px">
-                        <div class="btn-group">
+                        <div class="btn-group" style="margin-right:5px">
                             <a href="{{ containerdict.Id }}/Stats" role="button" class="btn btn-default" ><span class="glyphicon glyphicon-stats" aria-hidden="true"></span> Stats</a>
-                            <a href="{{ containerdict.Id }}/Logs" role="button" class="btn btn-default" ><span class="glyphicon glyphicon-file" aria-hidden="true"></span> Logs</a>
-                            <a href="{{ containerdict.Id }}/Inspect" role="button" class="btn btn-default" ><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> Inspect</a>
                         </div>
                         <form action="" method="post">
                         {% csrf_token %}

@@ -158,14 +158,3 @@ def Stats(request, Id):
     template = get_template('stats.html')
     html = template.render(locals())
     return HttpResponse(html)
-
-
-
-def Logs(request, Id):
-        pass
-
-def Inspect(request, Id):
-        pass
-
-
-
