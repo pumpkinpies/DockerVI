@@ -38,7 +38,7 @@
                     {% for container in containerlist %}
                         <tr>
                             <td>
-                               <a href="Containers/{{ container.Id }}" title="">{{ container.Name  }} </a>
+				    <a href="Containers/{{ container.Id }}" title="">{{ container.Name | truncatechars:20 }} </a>
                             </td>
                             <td>
                             {% if container.IsRunning %}
@@ -48,7 +48,7 @@
                             {% endif %}
                             </td>
                             <td>
-                                {{ container.Image }}
+                                {{ container.Image | truncatechars:20 }}
                             </td>
                             <td>
                                 {{ container.IPAddress }}
