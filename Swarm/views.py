@@ -47,3 +47,31 @@ def Nodes(request):
     template = get_template('swarm.html')
     html = template.render(locals())
     return HttpResponse(html)
+
+def Services(request, Id):
+    client = docker.from_env()
+    templist = client.services.list(filters=({ 'id':Id }))
+
+    containerlist = []
+    containerdict = {}
+    if templist != None:
+        for i in templist:
+            templist2 = i.tasks()
+            for j in templist2:
+               containerdict['Id'] = j['ID']
+               containerdict['Image'] = j['Spec']['ContainerSpec']['Image']
+               NodeId = j['NodeID']
+               containerdict['Node'] =  client.nodes.get(NodeId).attrs['Description']['Hostname']
+               containerdict['State'] = j['Status']['State']
+               containerdict['IsRunning'] = '' 
+               print (containerdict['State'])
+               if containerdict['State'] == 'running':
+                  containerdict['IsRunning'] = 1
+
+               containerdict['Created'] = j['CreatedAt']
+
+               containerlist.append(containerdict.copy())
+
+    template = get_template('serviceinfo.html')
+    html = template.render(locals())
+    return HttpResponse(html)
