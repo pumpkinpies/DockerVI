@@ -7,6 +7,7 @@ from django.contrib import messages
 import json
 import docker
 
+iplist = ['192.168.56.102']
 
 def getContainInfo(container):
     containerdict = {}
@@ -47,69 +48,87 @@ def ContainerInfo(request, Id):
 
     if value is None:
         
-        client = docker.from_env()
-        container = client.containers.get(Id)
-        containerdict,volumelist = getContainInfo(container)
-        if containerdict['Status'] == 'exited':
-            StartIsDisabled = ''
-            StopIsDisabled = 'disabled=\'disabled\''
-            RestartIsDisabled = 'disabled=\'disabled\''
-            PauseIsDisabled = 'disabled=\'disabled\''
-            ResumeIsDisabled = 'disabled=\'disabled\''
-            KillIsDisabled = 'disabled=\'disabled\''
-        else :            
-            if containerdict['Paused'] == False:
-                StartIsDisabled = 'disabled=\'disabled\''
-                StopIsDisabled = ''
-                RestartIsDisabled = ''
-                PauseIsDisabled = ''
-                ResumeIsDisabled = 'disabled=\'disabled\''
-                KillIsDisabled = ''
-            else:
-                StartIsDisabled = 'disabled=\'disabled\''
+        try:
+            try:
+                client = docker.from_env()
+                container = client.containers.get(Id)
+            except:
+                client = docker.DockerClient(base_url = 'tcp://'+iplist[0]+':5678')
+                container = client.containers.get(Id)
+        except docker.errors.NotFound as e:
+            pass
+        else:          
+            containerdict,volumelist = getContainInfo(container)
+            if containerdict['Status'] == 'exited':
+                StartIsDisabled = ''
                 StopIsDisabled = 'disabled=\'disabled\''
                 RestartIsDisabled = 'disabled=\'disabled\''
                 PauseIsDisabled = 'disabled=\'disabled\''
-                ResumeIsDisabled = ''
+                ResumeIsDisabled = 'disabled=\'disabled\''
                 KillIsDisabled = 'disabled=\'disabled\''
+            else :            
+                if containerdict['Paused'] == False:
+                    StartIsDisabled = 'disabled=\'disabled\''
+                    StopIsDisabled = ''
+                    RestartIsDisabled = ''
+                    PauseIsDisabled = ''
+                    ResumeIsDisabled = 'disabled=\'disabled\''
+                    KillIsDisabled = ''
+                else:
+                    StartIsDisabled = 'disabled=\'disabled\''
+                    StopIsDisabled = 'disabled=\'disabled\''
+                    RestartIsDisabled = 'disabled=\'disabled\''
+                    PauseIsDisabled = 'disabled=\'disabled\''
+                    ResumeIsDisabled = ''
+                    KillIsDisabled = 'disabled=\'disabled\'' 
 
 
     else:
-        client = docker.from_env()
-        container = client.containers.get(Id)
         try:
-            exec ('container.%s' %value)
-        except :
-            messages.add_message(request,messages.ERROR, 'Someting Wrong, Please Check') 
+            try:
+                client = docker.from_env()
+                container = client.containers.get(Id)
+            except:
+                client = docker.DockerClient(base_url = 'tcp://'+iplist[0]+':5678')
+                container = client.containers.get(Id)
+        except:
+            pass
+        else:
+            try:
+                exec ('container.%s' %value)
+            except :
+                messages.add_message(request,messages.ERROR, 'Someting Wrong, Please Check') 
             
-
-        client = docker.from_env()
-        container = client.containers.get(Id)
-        containerdict,volumelist = getContainInfo(container)
-        
-        if containerdict['Status'] == 'exited':
-            StartIsDisabled = ''
-            StopIsDisabled = 'disabled=\'disabled\''
-            RestartIsDisabled = 'disabled=\'disabled\''
-            PauseIsDisabled = 'disabled=\'disabled\''
-            ResumeIsDisabled = 'disabled=\'disabled\''
-            KillIsDisabled = 'disabled=\'disabled\''
-        else :            
-            if containerdict['Paused'] == False:
-                StartIsDisabled = 'disabled=\'disabled\''
-                StopIsDisabled = ''
-                RestartIsDisabled = ''
-                PauseIsDisabled = ''
-                ResumeIsDisabled = 'disabled=\'disabled\''
-                KillIsDisabled = ''
-            else:
-                StartIsDisabled = 'disabled=\'disabled\''
+        try:        
+            client = docker.from_env()
+            container = client.containers.get(Id)
+        except:
+            pass
+        else:
+            containerdict,volumelist = getContainInfo(container)
+            
+            if containerdict['Status'] == 'exited':
+                StartIsDisabled = ''
                 StopIsDisabled = 'disabled=\'disabled\''
                 RestartIsDisabled = 'disabled=\'disabled\''
                 PauseIsDisabled = 'disabled=\'disabled\''
-                ResumeIsDisabled = ''
+                ResumeIsDisabled = 'disabled=\'disabled\''
                 KillIsDisabled = 'disabled=\'disabled\''
-        
+            else :            
+                if containerdict['Paused'] == False:
+                    StartIsDisabled = 'disabled=\'disabled\''
+                    StopIsDisabled = ''
+                    RestartIsDisabled = ''
+                    PauseIsDisabled = ''
+                    ResumeIsDisabled = 'disabled=\'disabled\''
+                    KillIsDisabled = ''
+                else:
+                    StartIsDisabled = 'disabled=\'disabled\''
+                    StopIsDisabled = 'disabled=\'disabled\''
+                    RestartIsDisabled = 'disabled=\'disabled\''
+                    PauseIsDisabled = 'disabled=\'disabled\''
+                    ResumeIsDisabled = ''
+                    KillIsDisabled = 'disabled=\'disabled\'' 
         
 
     html = template.render(locals())
@@ -119,9 +138,14 @@ def ContainerInfo(request, Id):
 
 @csrf_exempt
 def Chart(request, Id):
-    client = docker.from_env()
-    container = client.containers.get(Id)    
-    
+   
+    try:
+        client = docker.from_env()
+        container = client.containers.get(Id)
+    except:
+        client = docker.DockerClient(base_url = 'tcp://'+iplist[0]+':5678')
+        container = client.containers.get(Id)
+ 
     container_stats = container.stats(decode=True,stream=False)
 
     memoryb = container_stats['memory_stats']['usage']                
@@ -139,9 +163,14 @@ def Chart(request, Id):
 
 
 def Stats(request, Id):
-    
-    client = docker.from_env()
-    container = client.containers.get(Id)
+   
+    try:
+        client = docker.from_env()
+        container = client.containers.get(Id)
+    except:
+        client = docker.DockerClient(base_url = 'tcp://'+iplist[0]+':5678')
+        container = client.containers.get(Id)
+ 
     container_process = container.top()['Processes']
     processlist = []
     processdict = {}

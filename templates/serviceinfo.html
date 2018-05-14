@@ -39,7 +39,7 @@
                     {% for container in containerlist %}
                         <tr>
                             <td>
-                               {{ container.Id | truncatechars:20 }}
+				<a href="/Containers/{{ container.Id }}">{{ container.Id | truncatechars:20 }}</a>
                             </td>
                             <td>
                                 {{  container.Image | truncatechars:20  }}

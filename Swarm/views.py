@@ -58,7 +58,7 @@ def Services(request, Id):
         for i in templist:
             templist2 = i.tasks()
             for j in templist2:
-               containerdict['Id'] = j['ID']
+               containerdict['Id'] = j['Status']['ContainerStatus']['ContainerID']
                containerdict['Image'] = j['Spec']['ContainerSpec']['Image']
                NodeId = j['NodeID']
                containerdict['Node'] =  client.nodes.get(NodeId).attrs['Description']['Hostname']
