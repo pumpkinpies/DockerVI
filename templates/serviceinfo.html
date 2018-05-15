@@ -1,5 +1,11 @@
 <!-- ServiceInfo -->
 {% extends "base.html" %}
+
+{% block header %}
+    <script src="http://cdn.hcharts.cn/highcharts/highcharts.js"></script>
+    <script src="/static/js/servicechart.js" type="text/javascript" charset="utf-8"></script>
+{% endblock %}
+
 {% block content %}
        <div class="col-md-9 ">
             <h5>&nbsp;</h5>
@@ -61,6 +67,9 @@
                     {% endfor %}                        
                     </tbody>
                 </table>
+                <div id="memory" style="height:280px;"></div>
+                <div id="cpu" style="height:280px;"></div>
+                <div id="network" style="height:280px;"></div>
             </div>
         </div>
 {% endblock %}
