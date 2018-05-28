@@ -8,13 +8,17 @@ The system based on Django and Docker Python SDK.
 ### Features:
 * Support real-time data
 * Support history-time data (SQLite)
-* SUpport Docker Swarm
+* Support Docker Swarm
 
 This is some demos:
 
 ![demo](./Images/a.png)
 
 ![demo](./Images/b.png)
+
+![demo](./Images/c.png)
+
+![demo](./Images/d.png)
 
 All external plug-ins used by DockerVI include:
 
