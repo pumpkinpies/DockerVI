@@ -90,7 +90,7 @@
                     {% for node in nodelist %}
                         <tr>
                             <td>
-			       <a href="Swarm/{{ node.Id }}/Node" title="">{{ node.Id | truncatechars:20 }}</a>
+			       <a href="Swarm/{{ node.IP }}/Node" title="">{{ node.Id | truncatechars:20 }}</a>
                             </td>
                             <td>
                             {% if node.IsRunning %}

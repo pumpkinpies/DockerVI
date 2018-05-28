@@ -123,7 +123,8 @@ def ServicesChart(request, Id):
         clientR = docker.DockerClient(base_url = 'tcp://'+iplist[0]+':5678')
         container = clientR.containers.get(i['Id'])
       finally:
-        containerlist.append(container)
+        if container.attrs['State']['Status'] == 'running':  
+           containerlist.append(container)
 
     memory, cpu, tx, rx = 0, 0, 0 ,0 
 
@@ -140,3 +141,25 @@ def ServicesChart(request, Id):
     rx = round(rx, 2)
 
     return HttpResponse(json.dumps({'memory':memory,'cpu':cpu,'tx':tx,'rx':rx}),content_type="application/json")
+
+
+def NodesInfo(request, IP):
+
+    client = docker.DockerClient(base_url = 'tcp://'+IP+':5678')
+
+    info = client.info()
+    HostName = info['Name']
+    DockerVersion = info['ServerVersion']
+    CpuNum = info['NCPU']
+    Memoryb = info['MemTotal']
+    Memory = str(round(Memoryb/(1024*1024*1024), 2))+' GB'
+    Containers = info['Containers']
+    ContainersRunning = info['ContainersRunning']
+    Images = len(client.images.list())
+    Volumes = len(client.volumes.list())
+    Networks = len(client.networks.list())
+
+
+    template = get_template('node.html')
+    html = template.render(locals())
+    return HttpResponse(html)

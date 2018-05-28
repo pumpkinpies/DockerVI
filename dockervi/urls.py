@@ -17,7 +17,7 @@ from django.conf.urls import url
 from django.contrib import admin
 from .views import Dashboard,Containers, Images,Volumes,Networks
 from Containers.views import ContainerInfo,Stats,Chart
-from Swarm.views import Nodes,Services,ServicesChart
+from Swarm.views import Nodes,Services,ServicesChart,NodesInfo
 
 
 urlpatterns = [
@@ -33,5 +33,6 @@ urlpatterns = [
     url(r'^Swarm$', Nodes),
     url(r'^Swarm/(\w+)/Service$', Services),
     url(r'^Swarm/(\w+)/Service/chart$', ServicesChart),
+    url(r'^Swarm/(\d+.\d+.\d+.\d+)/Node$', NodesInfo),
 ]
 
