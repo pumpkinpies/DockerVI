@@ -12,7 +12,7 @@ The system based on Django and Docker Python SDK.
 * Support history-time data (SQLite)
 * Support Docker Swarm
 
-This is some demos:
+There are some demos:
 
 ![demo](./Images/a.png)
 
