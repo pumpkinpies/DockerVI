@@ -1,0 +1,152 @@
+<!-- HistoryInfo -->
+{% extends "base.html" %}
+
+{% block header %}
+    <script src="http://cdn.hcharts.cn/highcharts/highcharts.js"></script>
+{% endblock %}
+
+{% block content %}
+            <div class="col-md-9 ">
+                <h5>&nbsp;</h5>
+                <h3>
+                    History
+                </h3>
+                <h4>&nbsp;</h4>
+                <div id="memory" style="height:280px;"></div>
+                <div id="cpu" style="height:280px;"></div>
+                <div id="network" style="height:280px;"></div>
+                </div>
+            </div>
+            <script>
+                var chart = new Highcharts.Chart('memory',{
+                    chart: {
+                      type: 'spline',
+                      zoomType: 'x'
+                    },
+                    title: {
+                        text: 'Memory'
+                    },
+                    xAxis: {
+                        type: 'datetime'
+                    },
+                    yAxis: {
+                        title: {
+                        text: ''
+                        }
+                    },
+                    tooltip: {
+                        valueSuffix: ' MB'
+                    },
+                    plotOptions: {
+                        spline: {
+                            lineWidth: 2,
+                            states: {
+                                hover: {
+                                    lineWidth: 3
+                                }
+                            },
+                            marker: {
+                                radius: 3,
+                                lineWidth: 0
+                            }
+                        }
+                    },
+                    series: [{
+                        name: 'Memory',     
+                        data: {{ memory }} 
+                    }],
+                    credits:{
+                        enabled: false // 禁用版权信息
+                    } 
+                });
+                var chart = new Highcharts.Chart('cpu',{
+                    chart: {
+                      type: 'spline',
+                      zoomType: 'x'
+                    },
+                    title: {
+                        text: 'CPU'
+                    },
+                    xAxis: {
+                        type: 'datetime'
+                    },
+                    yAxis: {
+                        title: {
+                        text: ''
+                        },
+                    },
+                    tooltip: {
+                        valueSuffix: ' %'
+                    },
+                    plotOptions: {
+                        spline: {
+                            lineWidth: 2,
+                            states: {
+                                hover: {
+                                    lineWidth: 3
+                                }
+                            },
+                            marker: {
+                                radius: 3,
+                                lineWidth: 0
+                            }
+                        }
+                    },
+                    series: [{
+                        name: 'cpu',     
+                        data: {{ cpu }} 
+                    }],
+                    credits:{
+                        enabled: false // 禁用版权信息
+                    } 
+                });
+                var chart = new Highcharts.Chart('network',{
+                    chart: {
+                      type: 'spline',
+                      zoomType: 'x'
+                    },
+                    title: {
+                        text: 'Network'
+                    },
+                    xAxis: {
+                        type: 'datetime'
+                    },
+                    yAxis: {
+                        title: {
+                        text: ''
+                        },
+                    },
+                    tooltip: {
+                        valueSuffix: ' Kb'
+                    },
+                    plotOptions: {
+                        spline: {
+                            lineWidth: 2,
+                            states: {
+                                hover: {
+                                    lineWidth: 3
+                                }
+                            },
+                            marker: {
+                                radius: 3,
+                                lineWidth: 0
+                            }
+                        }
+                    },
+                    series: [{
+                        name: 'rx',     
+                        data: {{ rx }},
+                        },{
+                        name: 'tx',
+                        color: '#ffb4ae',
+                        data: {{ tx }} 
+                    }],
+                    credits:{
+                        enabled: false // 禁用版权信息
+                    } 
+                });
+
+
+            </script>
+{% endblock %}
+

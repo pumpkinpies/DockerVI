@@ -16,7 +16,7 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from .views import Dashboard,Containers, Images,Volumes,Networks
-from Containers.views import ContainerInfo,Stats,Chart
+from Containers.views import ContainerInfo,Stats,Chart,History
 from Swarm.views import Nodes,Services,ServicesChart,NodesInfo
 
 
@@ -27,6 +27,7 @@ urlpatterns = [
     url(r'^Containers/(\w+)$',ContainerInfo),
     url(r'^Containers/(\w+)/Stats$', Stats),
     url(r'^Containers/(\w+)/Stats/chart$', Chart),
+    url(r'^Containers/(\w+)/History$', History),
     url(r'^Images$', Images),
     url(r'^Volumes$', Volumes),
     url(r'^Networks$', Networks),

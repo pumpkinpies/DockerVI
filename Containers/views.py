@@ -4,8 +4,8 @@ from django.template import context
 from datetime import datetime
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib import messages
-import json
-import docker
+import json,docker,sqlite3,time
+
 
 iplist = ['192.168.56.102']
 
@@ -187,3 +187,32 @@ def Stats(request, Id):
     template = get_template('stats.html')
     html = template.render(locals())
     return HttpResponse(html)
+
+
+def History(request, Id):
+    conn = sqlite3.connect('docker.db')
+    cursor = conn.cursor()
+    memory = []
+    cpu = []
+    rx = []
+    tx = []
+
+    data = cursor.execute("SELECT logtime,mem,cpu,rx,tx  FROM container WHERE Id = \'%s\'" %Id)
+    for row in data:
+        time_stamp = row[0]*1000+28800000
+        mpoint = [time_stamp, row[1]]
+        cpoint = [time_stamp, row[2]]
+        rpoint = [time_stamp, row[3]]
+        tpoint = [time_stamp, row[4]]
+        
+        memory.append(mpoint)
+        cpu.append(cpoint)
+        rx.append(rpoint)
+        tx.append(tpoint)
+
+    cursor.execute("DELETE FROM container WHERE strftime('%s','now')-logtime > 43200")
+
+    template = get_template('history.html')
+    html = template.render(locals())
+    return HttpResponse(html)
+

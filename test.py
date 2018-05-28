@@ -9,7 +9,7 @@ def create_ctable():
     try:
         cursor.execute('''CREATE TABLE IF NOT EXISTS container 
         (Id CHAR(64) NOT NULL, 
-        logtime TIMESTAMP default (datetime('now', 'localtime')), 
+        logtime TIMESTAMP default (strftime('%s','now')), 
         mem DECIMAL(20,2),
         cpu DECIMAL(20,2),
         rx DECIMAL(20,2),
