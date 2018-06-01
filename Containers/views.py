@@ -212,6 +212,9 @@ def History(request, Id):
 
     cursor.execute("DELETE FROM container WHERE strftime('%s','now')-logtime > 43200")
 
+    conn.commit()  
+    conn.close()
+
     template = get_template('history.html')
     html = template.render(locals())
     return HttpResponse(html)
